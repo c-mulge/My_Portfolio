@@ -37,7 +37,7 @@ const ProjectNave = () => {
         </div>
 
         {/* Desktop Links */}
-        <div className="hidden md:flex space-x-8 navbar-links">
+        {/* <div className="hidden md:flex space-x-8 navbar-links">
           {['Home', 'About', 'Projects', 'Contact'].map((item) => (
             <span
               key={item}
@@ -48,7 +48,7 @@ const ProjectNave = () => {
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-400 transition-all duration-500 group-hover:w-full"></span>
             </span>
           ))}
-        </div>
+        </div> */}
 
         {/* Social Links - Desktop */}
         <div className="hidden md:flex space-x-4">
@@ -91,7 +91,7 @@ const ProjectNave = () => {
               onClick={() => handleNavigation(item)}
             >
               {item}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-400 transition-all duration-500 group-hover:w-full"></span>
+navigateTo              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-400 transition-all duration-500 group-hover:w-full"></span>
             </span>
           ))}
 
