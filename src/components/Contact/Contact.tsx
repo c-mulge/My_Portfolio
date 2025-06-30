@@ -1,37 +1,13 @@
 'use client'
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Github, Linkedin, Twitter, Sparkles, ArrowRight, Send, User, Mail, MessageSquare } from "lucide-react";
+import { Github, Linkedin, Twitter, Download, Sparkles, ArrowRight, Mail, Copy, Check, Phone } from "lucide-react";
 
 const ContactPage = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Validate fields
-    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
-      alert('Please fill in all fields');
-      return;
-    }
-    
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    // You can add your form submission logic here
-    alert('Message sent successfully!');
-    setFormData({ name: '', email: '', message: '' });
-  };
+  const [emailCopied, setEmailCopied] = useState(false);
+  const [phoneCopied, setPhoneCopied] = useState(false);
+  const email = "mulgechannveer@gmail.com"; 
+  const number = "+91 70208 41171"; 
 
   const socialLinks = [
     {
@@ -51,23 +27,32 @@ const ContactPage = () => {
     }
   ];
 
-  // Star colors array
+  const handleEmailCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(email);
+      setEmailCopied(true);
+      setTimeout(() => setEmailCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy email:', err);
+    }
+  };
+
+  const handlePhoneCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(number);
+      setPhoneCopied(true);
+      setTimeout(() => setPhoneCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy phone:', err);
+    }
+  };
+
   const starColors = [
-    '#FFD700', // Gold
-    '#FF6B9D', // Pink
-    '#00D4FF', // Cyan
-    '#FF4757', // Red
-    '#7B68EE', // Medium Slate Blue
-    '#32CD32', // Lime Green
-    '#FF8C00', // Dark Orange
-    '#9370DB', // Medium Purple
-    '#00CED1', // Dark Turquoise
-    '#FF69B4', // Hot Pink
-    '#ADFF2F', // Green Yellow
-    '#FF1493'  // Deep Pink
+    '#FFD700', '#FF6B9D', '#00D4FF', '#FF4757', '#7B68EE',
+    '#32CD32', '#FF8C00', '#9370DB', '#00CED1', '#FF69B4',
+    '#ADFF2F', '#FF1493'
   ];
 
-  // Generate random star positions and sizes with colors
   const stars = Array.from({ length: 50 }).map((_, i) => ({
     id: i,
     top: `${Math.random() * 100}%`,
@@ -78,7 +63,6 @@ const ContactPage = () => {
     duration: Math.random() * 3 + 2
   }));
 
-  // Generate some larger twinkling stars with colors
   const bigStars = Array.from({ length: 10 }).map((_, i) => ({
     id: i + 50,
     top: `${Math.random() * 100}%`,
@@ -92,7 +76,7 @@ const ContactPage = () => {
   return (
     <div 
       id="contact-section" 
-      className="min-h-screen bg-black text-white flex flex-col items-center justify-center px-4 py-16 relative overflow-hidden"
+      className="min-h-screen bg-black text-white flex flex-col items-center justify-center px-4 relative overflow-hidden"
     >
       {/* Background stars */}
       {stars.map((star) => (
@@ -143,7 +127,7 @@ const ContactPage = () => {
         />
       ))}
 
-      <div className="text-center max-w-4xl mx-auto relative z-10">
+      <div className="text-center max-w-2xl mx-auto relative z-10">
         {/* Badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -178,72 +162,85 @@ const ContactPage = () => {
           with cutting-edge technology
         </motion.p>
 
-        {/* Contact Form */}
+        {/* Email */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-          className="max-w-md mx-auto bg-gray-900/50 backdrop-blur-sm p-8 rounded-2xl border border-gray-800 mb-8"
+          transition={{ duration: 0.5, delay: 0.25 }}
+          className="mb-6"
         >
-          <h2 className="text-2xl font-bold mb-6 text-center">Get In Touch</h2>
-          <div className="space-y-6">
-            {/* Name Field */}
-            <div className="relative">
-              <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                placeholder="Your Name"
-                className="w-full bg-gray-800 border border-gray-700 rounded-lg pl-12 pr-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition-colors"
-              />
-            </div>
-
-            {/* Email Field */}
-            <div className="relative">
-              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                placeholder="Your Email"
-                className="w-full bg-gray-800 border border-gray-700 rounded-lg pl-12 pr-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition-colors"
-              />
-            </div>
-
-            {/* Message Field */}
-            <div className="relative">
-              <MessageSquare className="absolute left-3 top-4 text-gray-400 w-5 h-5" />
-              <textarea
-                name="message"
-                value={formData.message}
-                onChange={handleInputChange}
-                placeholder="Your Message"
-                rows={5}
-                className="w-full bg-gray-800 border border-gray-700 rounded-lg pl-12 pr-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition-colors resize-none"
-              />
-            </div>
-
-            {/* Submit Button */}
+          <div className="inline-flex items-center gap-3 bg-gray-900 border border-gray-800 rounded-lg px-4 py-3 hover:bg-gray-800 transition-colors">
+            <Mail className="w-5 h-5 text-gray-400" />
+            <span className="text-gray-300 font-mono text-sm md:text-base">{email}</span>
             <button
-              onClick={handleSubmit}
-              className="w-full group inline-flex items-center justify-center gap-3 bg-white text-black py-3 px-6 rounded-lg font-bold text-lg transition hover:bg-gray-200"
+              onClick={handleEmailCopy}
+              className="p-1 hover:bg-gray-700 rounded transition-colors"
+              title="Copy email"
             >
-              <Send className="w-5 h-5" />
-              Send Message
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              {emailCopied ? (
+                <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="flex items-center gap-1">
+                  <Check className="w-4 h-4 text-green-400" />
+                  <span className="text-xs text-green-400">Copied!</span>
+                </motion.div>
+              ) : (
+                <Copy className="w-4 h-4 text-gray-400 hover:text-white" />
+              )}
             </button>
           </div>
         </motion.div>
 
-        {/* Social Links - Now positioned below the contact form */}
+        {/* Phone */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-          className="flex gap-4 justify-center"
+          transition={{ duration: 0.5, delay: 0.25 }}
+          className="mb-8"
+        >
+          <div className="inline-flex items-center gap-3 bg-gray-900 border border-gray-800 rounded-lg px-4 py-3 hover:bg-gray-800 transition-colors">
+            <Phone className="w-5 h-5 text-gray-400" />
+            <span className="text-gray-300 font-mono text-sm md:text-base">{number}</span>
+            <button
+              onClick={handlePhoneCopy}
+              className="p-1 hover:bg-gray-700 rounded transition-colors"
+              title="Copy phone"
+            >
+              {phoneCopied ? (
+                <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="flex items-center gap-1">
+                  <Check className="w-4 h-4 text-green-400" />
+                  <span className="text-xs text-green-400">Copied!</span>
+                </motion.div>
+              ) : (
+                <Copy className="w-4 h-4 text-gray-400 hover:text-white" />
+              )}
+            </button>
+          </div>
+        </motion.div>
+
+        {/* Download Resume */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="mb-16"
+        >
+          <a 
+            href="/My_Resume.pdf" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="group inline-flex items-center gap-3 bg-white text-black py-3 px-6 rounded-lg font-bold text-lg transition hover:bg-gray-200"
+          >
+            <Download className="w-5 h-5" />
+            Download Resume
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </a>
+        </motion.div>
+
+        {/* Social Links */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="flex gap-4 justify-center mb-12"
         >
           {socialLinks.map((social) => (
             <a
@@ -258,6 +255,16 @@ const ContactPage = () => {
             </a>
           ))}
         </motion.div>
+
+        {/* Footer Text */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+          className="text-gray-500"
+        >
+          Let&#39;s build something extraordinary together
+        </motion.p>
       </div>
     </div>
   );
