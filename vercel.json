@@ -1,0 +1,23 @@
+{
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/"
+    },
+    {
+      "source": "/pangat",
+      "destination": "/pangat"
+    },
+    {
+      "source": "/shopeasy",
+      "destination":"/shopeasy"
+    },
+    {
+      "source": "/bank",
+      "destination":"/bank"
+    },{
+      "source": "/blogging",
+      "destination":"/blogging"
+    }
+  ]
+} 
