@@ -1,67 +1,65 @@
 'use client'
 
-import { Github, Linkedin } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
-import { gsap } from 'gsap';
+import { useState } from 'react'
+import { Menu, X } from 'lucide-react'
 
 const Navbar = () => {
-  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false)
 
-  useEffect(() => {
-    gsap.from(".navbar-container", { opacity: 0, y: -30, duration: 0.8, ease: "power3.out" });
-    gsap.from(".navbar-logo", { opacity: 0, x: -20, duration: 0.8, ease: "power3.out", delay: 0.2 });
-    gsap.from(".navbar-links span", { opacity: 0, y: -10, duration: 0.8, ease: "power3.out", stagger: 0.1, delay: 0.4 });
-    gsap.from(".navbar-social a", { opacity: 0, x: 20, duration: 0.8, ease: "power3.out", stagger: 0.1, delay: 0.6 });
+  const toggleMenu = () => setMenuOpen(!menuOpen)
+  const closeMenu = () => setMenuOpen(false)
 
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const navLinks = [
+    { name: 'Home', href: '#home' },
+    { name: 'About', href: '#about' },
+    { name: 'Projects', href: '#projects' },
+    { name: 'Contact', href: '#contact' }
+  ]
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-black/30 border-b border-orange-500/20 transition-all duration-500 ${scrolled ? 'shadow-xl bg-black/50' : ''} navbar-container`}>
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <header className="fixed top-0 left-0 w-full z-50 bg-black/80 backdrop-blur-lg shadow-md">
+      <div className="flex items-center justify-between max-w-7xl mx-auto px-4 sm:px-6 py-4">
         {/* Logo */}
-        <div className="navbar-logo text-2xl font-extrabold text-orange-400 cursor-pointer tracking-wide"
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-          CM
-        </div>
+        <div className="text-white text-2xl font-bold cursor-pointer">Channveer</div>
 
-        {/* Links */}
-        <div className="flex space-x-8 navbar-links">
-          {['Home', 'About', 'Projects', 'Contact'].map((item) => (
-            <span
-              key={item}
-              className="relative text-sm uppercase tracking-wider text-white cursor-pointer hover:text-orange-400 transition-colors duration-300 group"
-              onClick={() => {
-                if (item === 'Home') window.scrollTo({ top: 0, behavior: 'smooth' });
-                else if (item === 'About') document.getElementById('about-section')?.scrollIntoView({ behavior: 'smooth' });
-                else if (item === 'Projects') document.getElementById('projects-section')?.scrollIntoView({ behavior: 'smooth' });
-                else if (item === 'Contact') document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth' });
-              }}
+        {/* Desktop Links */}
+        <nav className="hidden md:flex space-x-8">
+          {navLinks.map((link, index) => (
+            <a
+              key={index}
+              href={link.href}
+              className="text-gray-300 hover:text-orange-500 text-lg font-medium transition-colors"
             >
-              {item}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-400 transition-all duration-500 group-hover:w-full"></span>
-            </span>
+              {link.name}
+            </a>
           ))}
-        </div>
+        </nav>
 
-        {/* Social Icons */}
-        <div className="flex items-center space-x-4 navbar-social">
-          <a href="https://github.com/c-mulge" target="_blank" rel="noopener noreferrer"
-            className="text-white hover:text-orange-400 transition-colors duration-300">
-            <Github size={22} />
-          </a>
-          <a href="https://www.linkedin.com/in/channveer-Mulge/" target='_blank' rel="noopener noreferrer"
-            className="text-white hover:text-orange-400 transition-colors duration-300">
-            <Linkedin size={22} />
-          </a>
+        {/* Mobile Hamburger */}
+        <div className="md:hidden">
+          <button onClick={toggleMenu} className="text-white focus:outline-none">
+            {menuOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
         </div>
       </div>
-    </nav>
-  );
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="md:hidden bg-black/90 backdrop-blur-sm py-6 px-8 flex flex-col space-y-6 animate-slide-down">
+          {navLinks.map((link, index) => (
+            <a
+              key={index}
+              href={link.href}
+              onClick={closeMenu}
+              className="text-gray-300 hover:text-orange-500 text-xl font-medium transition-colors"
+            >
+              {link.name}
+            </a>
+          ))}
+        </div>
+      )}
+    </header>
+  )
 }
 
-export default Navbar;
+export default Navbar
