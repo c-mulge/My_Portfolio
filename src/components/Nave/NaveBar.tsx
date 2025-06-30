@@ -7,33 +7,36 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
 
   const toggleMenu = () => setMenuOpen(!menuOpen)
-  const closeMenu = () => setMenuOpen(false)
 
-  const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Contact', href: '#contact' }
-  ]
+  const handleNavigation = (item: string) => {
+    if (item === 'Home') window.scrollTo({ top: 0, behavior: 'smooth' })
+    else if (item === 'About') document.getElementById('about-section')?.scrollIntoView({ behavior: 'smooth' })
+    else if (item === 'Projects') document.getElementById('projects-section')?.scrollIntoView({ behavior: 'smooth' })
+    else if (item === 'Contact') document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth' })
+
+    // Automatically close menu on mobile after click
+    setMenuOpen(false)
+  }
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-black/80 backdrop-blur-lg shadow-md">
       <div className="flex items-center justify-between max-w-7xl mx-auto px-4 sm:px-6 py-4">
         {/* Logo */}
-        <div className="text-white text-2xl font-bold cursor-pointer">Channveer</div>
+        <div className="text-white text-2xl font-bold cursor-pointer">CM</div>
 
         {/* Desktop Links */}
-        <nav className="hidden md:flex space-x-8">
-          {navLinks.map((link, index) => (
-            <a
-              key={index}
-              href={link.href}
-              className="text-gray-300 hover:text-orange-500 text-lg font-medium transition-colors"
+        <div className="hidden md:flex space-x-8 navbar-links">
+          {['Home', 'About', 'Projects', 'Contact'].map((item) => (
+            <span
+              key={item}
+              className="relative text-sm uppercase tracking-wider text-white cursor-pointer hover:text-orange-400 transition-colors duration-300 group"
+              onClick={() => handleNavigation(item)}
             >
-              {link.name}
-            </a>
+              {item}
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-400 transition-all duration-500 group-hover:w-full"></span>
+            </span>
           ))}
-        </nav>
+        </div>
 
         {/* Mobile Hamburger */}
         <div className="md:hidden">
@@ -46,15 +49,15 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="md:hidden bg-black/90 backdrop-blur-sm py-6 px-8 flex flex-col space-y-6 animate-slide-down">
-          {navLinks.map((link, index) => (
-            <a
-              key={index}
-              href={link.href}
-              onClick={closeMenu}
-              className="text-gray-300 hover:text-orange-500 text-xl font-medium transition-colors"
+          {['Home', 'About', 'Projects', 'Contact'].map((item) => (
+            <span
+              key={item}
+              className="relative text-sm uppercase tracking-wider text-white cursor-pointer hover:text-orange-400 transition-colors duration-300 group"
+              onClick={() => handleNavigation(item)}
             >
-              {link.name}
-            </a>
+              {item}
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-400 transition-all duration-500 group-hover:w-full"></span>
+            </span>
           ))}
         </div>
       )}
