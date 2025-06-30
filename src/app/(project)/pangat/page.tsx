@@ -1,220 +1,304 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Image from 'next/image';
-import OnlyBtn from '@/components/Button/Button';
-import { Github, MoveRight } from 'lucide-react';
+import { Github, ArrowRight, MessageCircle, Users, Video, Server } from 'lucide-react'
 
-const frontend = ["Next JS", "Tailwind Css", "Type Script", "Shad CN", "Live Kit", "React", "Next Auth", "Zod", "React Hook Form", "Axios"];
-const backend = ["Next JS", "GoLang", "Gorilla Web Socket", "Gin", "Postgres", "Prisma", "SQLC", "Next Auth", "Zod"];
+const frontend = ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn/ui", "LiveKit", "React Hook Form", "Zod"]
+const backend = ["Next.js", "Go", "WebSocket", "Gin", "PostgreSQL", "Prisma", "SQLC"]
 
-gsap.registerPlugin(ScrollTrigger);
-
-const serverManagementImages = [
-  "/create1.png",
-  "/create0.png",
-  "/group1.png",
-  "/group0.png"
-];
+const features = [
+  {
+    icon: <Server className="w-8 h-8" />,
+    title: "Server Management",
+    description: "Create and manage community servers with organized channels and groups.",
+    image: "/create1.png"
+  },
+  {
+    icon: <MessageCircle className="w-8 h-8" />,
+    title: "Real-time Messaging",
+    description: "Lightning-fast messaging with WebSocket technology for instant communication.",
+    image: "/chat.png"
+  },
+  {
+    icon: <Video className="w-8 h-8" />,
+    title: "Video & Audio Calls",
+    description: "High-quality video and audio communication powered by LiveKit.",
+    image: "/video.png"
+  },
+  {
+    icon: <Users className="w-8 h-8" />,
+    title: "Community Building",
+    description: "Build thriving communities with advanced moderation and management tools.",
+    image: "/group1.png"
+  }
+]
 
 const PangatPage = () => {
-  const [showContent, setShowContent] = useState(false);
-  const [currentPreMadeBlockImageIndex, setCurrentPreMadeBlockImageIndex] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [activeFeature, setActiveFeature] = useState(0)
 
   useEffect(() => {
-    const preMadeBlockInterval = setInterval(() => {
-      setCurrentPreMadeBlockImageIndex((idx) => (idx + 1) % serverManagementImages.length);
-    }, 2000);
-
-    return () => clearInterval(preMadeBlockInterval);
-  }, []);
+    const timer = setTimeout(() => setIsLoaded(true), 100)
+    return () => clearTimeout(timer)
+  }, [])
 
   useEffect(() => {
-    gsap.set(".pangat-intro-image", { scale: 0, y: 0, opacity: 1 });
-
-    const tl = gsap.timeline({
-      onComplete: () => {
-        setShowContent(true);
-      },
-    });
-
-    tl.to(".pangat-intro-overlay", {
-      y: "0%",
-      duration: 1.2,
-      ease: "power2.out",
-    })
-      .to(".pangat-intro-image", {
-        scale: 1,
-        duration: 1.0,
-        ease: "power3.out",
-        delay: -0.8,
-      }, "<")
-      .to(".pangat-intro-overlay", {
-        y: "100%",
-        duration: 1.2,
-        ease: "power2.in",
-        delay: 0.6,
-      }, ">-0.6")
-      .to(".pangat-intro-image", {
-        y: "100%",
-        opacity: 0,
-        duration: 1.2,
-        ease: "power2.in",
-        delay: -0.8,
-      }, "<");
-  }, []);
-
-  useEffect(() => {
-    if (showContent) {
-      gsap.fromTo('.pangat-main-title', { opacity: 0, y: 0 }, { opacity: 1, y: 0, duration: 1.5, ease: 'expo.out' });
-      gsap.fromTo('.pangat-second-title', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1.2, delay: 0.2, ease: 'expo.out' });
-      gsap.fromTo('.pangat-main-image-wrapper', { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.pangat-main-image-wrapper', start: 'top 80%' } });
-      gsap.fromTo('.real-time-messaging-section', { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.real-time-messaging-section', start: 'top 80%' } });
-      gsap.fromTo('.circular-text-block', { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.circular-text-block', start: 'top 80%' } });
-      gsap.fromTo('.audio-video-section', { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.audio-video-section', start: 'top 80%' } });
-      gsap.fromTo('.video-call-section', { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.video-call-section', start: 'top 80%' } });
-    }
-  }, [showContent]);
+    const interval = setInterval(() => {
+      setActiveFeature(prev => (prev + 1) % features.length)
+    }, 4000)
+    return () => clearInterval(interval)
+  }, [])
 
   return (
-    <>
-      <div className="relative font-sans min-h-screen bg-[#FD92E7] text-black pt-[10vh]">
-        <div className="pangat-intro-overlay fixed inset-0 bg-[#FF5C00] z-50 flex items-center justify-center">
-          <Image src="/star.png" alt="Intro Image" width={120} height={120} className="pangat-intro-image" priority />
-        </div>
+    <div className="min-h-screen bg-black text-white">
+      {/* Hero Section */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-black to-gray-900">
+        <div
+          className="absolute inset-0 opacity-40"
+          style={{
+            backgroundImage:
+              "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23FF5C00' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")"
+          }}
+        ></div>
 
-        {showContent && (
-          <main className="flex flex-col items-start px-6 py-16 sm:px-8 md:px-12 lg:px-20 relative z-20 max-w-[90rem] mx-auto">
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold mb-10 leading-none pangat-main-title pr-12">
-              Flexible, beautiful<br />and simple.<span className="text-[#FFFF]"> It's the Semplice way.</span>
-            </h1>
-
-            <div className="mt-[15vh] mb-12 px-4">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-black pangat-second-title">
-                Pangat
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
+          <div className={`transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <div className="text-center max-w-4xl mx-auto">
+              <div className="inline-flex items-center px-4 py-2 rounded-full bg-orange-500/20 border border-orange-500/30 text-orange-400 text-sm font-medium mb-8">
+                <span className="w-2 h-2 bg-orange-500 rounded-full mr-2 animate-pulse"></span>
+                Real-time Communication Platform
+              </div>
+              
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+                Build Communities.
+                <span className="bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent"> Connect People.</span>
               </h1>
-              <p className="mt-4 text-lg sm:text-xl md:text-2xl text-zinc-700 font-semibold max-w-3xl mx-auto">
-                A Real-Time Social Media & Communication Platform
+              
+              <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
+                Pangat brings people together through powerful real-time messaging, video calls, and community management tools.
               </p>
-            </div>
-
-            <OnlyBtn
-              className='bg-blue-700 text-white cursor-pointer h-[60px] mb-5 w-[140px] font-bold border-none flex justify-center items-center gap-2 hover:text-zinc-800'
-              onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })}
-            >
-              <div>Skill Use</div>
-              <div><MoveRight size={18} /></div>
-            </OnlyBtn>
-
-            <div className="w-full relative h-[26rem] sm:h-[30rem] md:h-[34rem] rounded-xl overflow-hidden shadow-2xl pangat-main-image-wrapper mb-14 bg-black">
-              <Image src={'/pangat01.png'} alt="Page Builder UI" fill style={{ objectFit: 'cover' }} className="transition-opacity duration-700" priority />
-            </div>
-
-            <div className='flex gap-5'>
-              <a href="https://github.com/siddheshRajendraNimbalkar/PANGAT" target='_blank'>
-                <OnlyBtn className='bg-white cursor-pointer h-[60px] w-[120px] font-bold border-none flex justify-center items-center gap-2 hover:text-[#FF5C00]'>
-                  <div>GITHUB</div>
-                  <div><Github size={18} /></div>
-                </OnlyBtn>
-              </a>
-            </div>
-          </main>
-        )}
-      </div>
-
-      <div className='bg-white h-[80vh] w-full flex justify-center items-center p-10 border-b'>
-        <div className='bg-[#23A094] p-8 rounded-full shadow-lg text-center border-2 border-black'>
-          <div className='bg-orange-500 p-8 rounded-full shadow-lg text-center border-2 border-black'>
-            <div className='bg-[#FFC900] text-xl px-8 md:px-16 py-8 md:py-12 text-black uppercase rounded-full border-2 shadow-lg circular-text-block max-w-4xl'>
-              <p>Pangat is a modern, full-stack social media and real-time communication platform inspired by community-based interaction models like Discord...</p>
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a 
+                  href="https://github.com/siddheshRajendraNimbalkar/PANGAT" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-8 py-4 bg-orange-500 text-black rounded-lg hover:bg-orange-400 transition-all duration-300 hover:scale-105 shadow-lg shadow-orange-500/25 font-semibold"
+                >
+                  <Github className="w-5 h-5 mr-2" />
+                  View on GitHub
+                </a>
+                
+                <button 
+                  onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="inline-flex items-center px-8 py-4 border-2 border-orange-500 text-orange-400 rounded-lg hover:bg-orange-500 hover:text-black transition-all duration-300 font-semibold"
+                >
+                  Explore Features
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Features part */}
-      <div className="text-black">
-        <div className="max-w-[90rem] mx-auto flex flex-col lg:flex-row">
-          <div className="w-full lg:w-1/2 bg-[#FB91E5] relative p-6">
-            <h2 className="text-4xl sm:text-5xl font-extrabold mb-6">Server & Group Management</h2>
-            <p className="text-lg mb-10 text-gray-800">
-              Create & manage servers representing communities or topics.
-              Inside each server, users can create multiple groups – text, audio & video.
-            </p>
-            <div className="overflow-hidden absolute bottom-0 right-0 w-full h-1/2 shadow-lg">
-              <Image src={serverManagementImages[currentPreMadeBlockImageIndex]} alt="social" fill style={{ objectFit: 'cover' }} className="object-right" />
+      {/* Main App Preview */}
+      <section className="py-20 bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-black rounded-2xl shadow-2xl overflow-hidden border border-orange-500/20">
+            <div className="bg-gradient-to-r from-gray-800 to-gray-900 px-6 py-4 border-b border-orange-500/20">
+              <div className="flex items-center space-x-2">
+                <div className="w-3 h-3 bg-red-400 rounded-full"></div>
+                <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                <div className="w-3 h-3 bg-green-400 rounded-full"></div>
+                <div className="ml-4 text-sm text-gray-400 font-mono">pangat.app</div>
+              </div>
             </div>
-          </div>
-
-          <div className="w-full lg:w-1/2 bg-[#FF5C00] real-time-messaging-section">
-            <div className="relative w-full h-[30rem] overflow-hidden shadow-2xl">
-              <Image src="/chat.png" alt="Pre-made blocks showcase" fill style={{ objectFit: 'cover' }} />
-            </div>
-            <div className='flex justify-end items-end flex-col p-6'>
-              <h2 className="text-4xl sm:text-5xl font-extrabold mb-6">Real-Time Messaging →</h2>
-              <p className="text-lg mb-10 text-gray-900 font-bold">
-                1-on-1 DMs and group messaging support with WebSocket (Gorilla).
-              </p>
+            <div className="aspect-[16/10] bg-gradient-to-br from-gray-900 to-black border border-orange-500/10 flex items-center justify-center">
+              <div className="text-center">
+                <div className="w-24 h-24 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-lg shadow-orange-500/25">
+                  <MessageCircle className="w-12 h-12 text-black" />
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-2">Application Preview</h3>
+                <p className="text-gray-400">Interactive demo coming soon</p>
+              </div>
             </div>
           </div>
         </div>
+      </section>
 
-        <div className='flex flex-col lg:flex-row w-full min-h-screen bg-[#1a1a1a] text-white audio-video-section'>
-          <div className="w-full lg:w-1/2 relative flex items-center justify-center">
-            <Image src="/conv.jpg" alt="Gallery Image" fill style={{ objectFit: 'cover' }} className="transition-opacity duration-700" />
-          </div>
-          <div className="w-full lg:w-1/2 flex flex-col justify-center p-10 bg-[#23A094] text-zinc-900">
-            <h2 className="text-5xl font-extrabold mb-6">Audio & Video Communication</h2>
-            <p className="text-lg mb-8 text-zinc-700">
-              Integrated with LiveKit for scalable WebRTC communication.
+      {/* Features Section */}
+      <section id="features" className="py-20 bg-black">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-white mb-4">Powerful Features</h2>
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+              Everything you need to build and manage thriving online communities
             </p>
           </div>
-        </div>
 
-        <div className='flex flex-col lg:flex-row justify-center items-center video-call-section'>
-          <div className='w-full lg:w-1/2 p-4'>
-            <Image src="https://assets.gumroad.com/assets/about/book-gumhead-ba981fd5fb02fe2934371d85a7ca2b5921736c92a82e629f625d1dd050825840.svg" alt="cartoon" height={500} width={500} />
-          </div>
-          <div className='w-full lg:w-1/2 bg-[#1E1E1E] h-full lg:h-screen flex justify-center items-center flex-col p-4'>
-            <h1 className='text-2xl font-extrabold w-full p-1 bg-fuchsia-500 text-center'>This is How Video And Call Section Look Like</h1>
-            <Image src="/video.png" alt="video" height={500} width={500} />
-          </div>
-        </div>
-
-        {/* ✅ Responsive Skill Display Section */}
-        <div className='w-full bg-white flex justify-center items-center p-6 md:p-10 gap-6 flex-col lg:flex-row min-h-[80vh]'>
-
-          {/* Frontend Card */}
-          <div className="bg-[#F1F333] p-6 sm:p-8 rounded-xl shadow-lg flex flex-col items-start text-white w-full max-w-md lg:max-w-[30%]">
-            <Image src="https://assets.gumroad.com/assets/discover/drawing-9fb474a77e8f85d359ee1b906f46c2f6833696fd9b2acd79b29552d9b7b00781.svg" alt="Pangat Logo" width={80} height={80} className="mb-4" />
-            <h3 className="text-2xl sm:text-3xl text-black mb-4 font-bold">Front End</h3>
-            <div className="flex flex-wrap gap-2 mt-auto">
-              {frontend.map((item, index) => (
-                <span key={index} className="bg-white text-zinc-800 rounded-full px-4 py-1 text-sm border border-gray-300">
-                  {item}
-                </span>
+          <div className="grid lg:grid-cols-2 gap-8 items-center">
+            {/* Feature Cards */}
+            <div className="space-y-6">
+              {features.map((feature, index) => (
+                <div
+                  key={index}
+                  className={`p-6 rounded-xl border-2 transition-all duration-300 cursor-pointer ${
+                    activeFeature === index
+                      ? 'border-orange-500 bg-orange-500/10 shadow-lg shadow-orange-500/20'
+                      : 'border-gray-800 hover:border-orange-500/50 hover:shadow-md hover:bg-gray-900/50'
+                  }`}
+                  onClick={() => setActiveFeature(index)}
+                >
+                  <div className="flex items-start space-x-4">
+                    <div className={`p-3 rounded-lg transition-all duration-300 ${
+                      activeFeature === index ? 'bg-orange-500 text-black' : 'bg-gray-800 text-orange-400'
+                    }`}>
+                      {feature.icon}
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-semibold text-white mb-2">{feature.title}</h3>
+                      <p className="text-gray-300">{feature.description}</p>
+                    </div>
+                  </div>
+                </div>
               ))}
             </div>
-          </div>
 
-          {/* Backend Card */}
-          <div className="bg-[#FF90E8] p-6 sm:p-8 rounded-xl shadow-lg flex flex-col items-start text-white w-full max-w-md lg:max-w-[30%]">
-            <Image src="https://assets.gumroad.com/assets/discover/film-bb2c44fa3a48b6cdaf5fa288c0386e8d17e532909ed54ea987d137092f99c3cc.svg" alt="Pangat Logo" width={80} height={80} className="mb-4" />
-            <h3 className="text-2xl sm:text-3xl text-black mb-4 font-bold">Back End</h3>
-            <div className="flex flex-wrap gap-2 mt-auto">
-              {backend.map((item, index) => (
-                <span key={index} className="bg-white text-gray-800 rounded-full px-4 py-1 text-sm border border-gray-300">
-                  {item}
-                </span>
-              ))}
+            {/* Feature Preview */}
+            <div className="bg-gradient-to-br from-gray-900 to-black border border-orange-500/20 rounded-2xl p-8 min-h-[500px] flex items-center justify-center">
+              <div className="text-center">
+                <div className="w-32 h-32 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl mx-auto mb-6 flex items-center justify-center shadow-lg shadow-orange-500/25">
+                  <div className="text-black text-4xl">
+                    {features[activeFeature].icon}
+                  </div>
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-2">
+                  {features[activeFeature].title}
+                </h3>
+                <p className="text-gray-400 mb-4">Feature demonstration</p>
+                <div className="w-16 h-1 bg-orange-500 rounded-full mx-auto"></div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </>
-  );
-};
+      </section>
 
-export default PangatPage;
+      {/* Tech Stack */}
+      <section className="py-20 bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-white mb-4">Built with Modern Technology</h2>
+            <p className="text-xl text-gray-300">
+              Leveraging the latest tools and frameworks for optimal performance
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Frontend */}
+            <div className="bg-black rounded-2xl p-8 shadow-lg border border-orange-500/20 hover:border-orange-500/40 transition-all duration-300">
+              <div className="flex items-center mb-6">
+                <div className="w-12 h-12 bg-orange-500/20 rounded-lg flex items-center justify-center mr-4 border border-orange-500/30">
+                  <div className="w-6 h-6 bg-orange-500 rounded"></div>
+                </div>
+                <h3 className="text-2xl font-bold text-white">Frontend</h3>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {frontend.map((tech, index) => (
+                  <span
+                    key={index}
+                    className="px-4 py-2 bg-orange-500/10 text-orange-400 rounded-lg text-sm font-medium border border-orange-500/30 hover:bg-orange-500/20 transition-colors duration-200"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Backend */}
+            <div className="bg-black rounded-2xl p-8 shadow-lg border border-orange-500/20 hover:border-orange-500/40 transition-all duration-300">
+              <div className="flex items-center mb-6">
+                <div className="w-12 h-12 bg-orange-500/20 rounded-lg flex items-center justify-center mr-4 border border-orange-500/30">
+                  <div className="w-6 h-6 bg-orange-500 rounded"></div>
+                </div>
+                <h3 className="text-2xl font-bold text-white">Backend</h3>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {backend.map((tech, index) => (
+                  <span
+                    key={index}
+                    className="px-4 py-2 bg-orange-500/10 text-orange-400 rounded-lg text-sm font-medium border border-orange-500/30 hover:bg-orange-500/20 transition-colors duration-200"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-20 bg-black border-t border-orange-500/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div className="text-center">
+              <div className="text-3xl font-bold text-orange-500 mb-2">100%</div>
+              <div className="text-gray-400">Real-time</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-orange-500 mb-2">∞</div>
+              <div className="text-gray-400">Scalable</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-orange-500 mb-2">24/7</div>
+              <div className="text-gray-400">Available</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-orange-500 mb-2">0ms</div>
+              <div className="text-gray-400">Latency Goal</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-r from-orange-600 to-orange-500">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-4xl font-bold text-black mb-6">
+            Ready to Build Your Community?
+          </h2>
+          <p className="text-xl text-black/80 mb-8 max-w-2xl mx-auto">
+            Join thousands of communities already using Pangat to connect, communicate, and grow together.
+          </p>
+          <a 
+            href="https://github.com/siddheshRajendraNimbalkar/PANGAT" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center px-8 py-4 bg-black text-orange-400 rounded-lg hover:bg-gray-900 transition-all duration-300 hover:scale-105 shadow-lg font-semibold"
+          >
+            <Github className="w-5 h-5 mr-2" />
+            Get Started on GitHub
+          </a>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-black border-t border-orange-500/20 text-white py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="flex items-center mb-4 md:mb-0">
+              <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg mr-3"></div>
+              <span className="text-xl font-bold">Pangat</span>
+            </div>
+            <div className="text-gray-400 text-sm">
+              Built with <span className="text-orange-500">❤️</span> for communities worldwide
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  )
+}
+
+export default PangatPage
