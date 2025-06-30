@@ -72,7 +72,7 @@ const ProjectDisplay = () => {
         <div className="flex flex-col space-y-24">
           {/* Project Items */}
           {[
-            { id: 1, title: 'Carental - A Car renting platform', tech: 'Html, Css, Php, SQL', link: '/pangat', img: '/create0.png', direction: 'left' },
+            { id: 1, title: 'Carental - A Car renting platform', tech: 'Html, Css, Php, SQL', link: '/carental', img: '/create0.png', direction: 'left' },
             { id: 2, title: 'Shop Easy (Ecommerce)', tech: 'NextJS, GoLang, AI', link: '/shopeasy', img: '/product1.png', direction: 'right' },
             // { id: 3, title: 'Go Bank', tech: 'GoLang', link: '/bank', img: '/Golang.webp', direction: 'left' },
             // { id: 4, title: 'Blogging Website', tech: 'ReactJS, HonoJS, Cloudflare', link: '/blogging', img: '/blog.png', direction: 'right' }
