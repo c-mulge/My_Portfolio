@@ -23,15 +23,12 @@ const ProjectNave = () => {
     else if (item === 'Projects') document.getElementById('projects-section')?.scrollIntoView({ behavior: 'smooth' })
     else if (item === 'Contact') document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth' })
 
-    // Automatically close the mobile menu after click
     setMenuOpen(false)
   }
 
   return (
     <header className={`fixed top-0 left-0 w-full z-50 ${isScrolled ? 'bg-black/95 backdrop-blur-sm shadow-lg shadow-orange-500/10 border-b border-orange-500/20' : 'bg-black/80 backdrop-blur-lg shadow-md'}`}>
       <div className="flex items-center justify-between max-w-7xl mx-auto px-4 sm:px-6 py-4">
-
-        {/* Logo */}
         <div className="text-white text-2xl font-bold cursor-pointer">
           CM
         </div>

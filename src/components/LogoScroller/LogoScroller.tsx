@@ -1,17 +1,16 @@
-'use client'
-import React from 'react';
+"use client";
+import React from "react";
 
 const rotatingTexts = [
-  "Building Scalable Systems ",
-  "Crafting Powerful APIs ",
-  "Developing Intuitive UIs ",
-  "Real-time Applications ",
-  "Distributed Systems ",
-  "Cloud-Native Solutions ",
-  "Web3 Exploration ",
-  "System Design Enthusiast",
-  "Open Source Contributor ",
-  "Problem Solver"
+  "Software Development ",
+  "Data Science Journey ",
+  "AI/ML Exploration ",
+  "Creative Problem Solving ",
+  "Clean & Scalable Systems ",
+  "Data-Driven Thinking ",
+  "Continuous Learning ",
+  "Technology & Innovation ",
+  "Building Digital Experiences ",
 ];
 
 const LogoScroller = () => {
@@ -19,8 +18,12 @@ const LogoScroller = () => {
     <div className="w-full overflow-hidden py-4 bg-black border-y border-[#ECE7E1]">
       <style jsx>{`
         @keyframes marquee {
-          0% { transform: translateX(0%); }
-          100% { transform: translateX(-100%); }
+          0% {
+            transform: translateX(0%);
+          }
+          100% {
+            transform: translateX(-100%);
+          }
         }
         .animate-marquee {
           animation: marquee 40s linear infinite; /* Adjusted speed */
@@ -29,13 +32,17 @@ const LogoScroller = () => {
       <div className="flex animate-marquee whitespace-nowrap">
         {rotatingTexts.map((text, index) => (
           <div key={index} className="mx-8 inline-block">
-            <span className="text-4xl font-extrabold text-[#ECE7E1] opacity-70 hover:opacity-100 transition-opacity duration-300">{text}</span>
+            <span className="text-4xl font-extrabold text-[#ECE7E1] opacity-70 hover:opacity-100 transition-opacity duration-300">
+              {text}
+            </span>
           </div>
         ))}
         {/* Duplicate texts for seamless infinite scroll */}
         {rotatingTexts.map((text, index) => (
           <div key={`duplicate-${index}`} className="mx-8 inline-block">
-            <span className="text-4xl font-extrabold text-[#ECE7E1] opacity-70 hover:opacity-100 transition-opacity duration-300">{text}</span>
+            <span className="text-4xl font-extrabold text-[#ECE7E1] opacity-70 hover:opacity-100 transition-opacity duration-300">
+              {text}
+            </span>
           </div>
         ))}
       </div>

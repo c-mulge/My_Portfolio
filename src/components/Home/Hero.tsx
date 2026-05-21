@@ -1,9 +1,17 @@
-'use client'
-import { useState, useEffect, ReactNode, useCallback, JSX } from 'react';
-import {  Linkedin } from 'react-feather';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Github, StickyNote, X, Coffee, Code2, Zap } from 'lucide-react';
+"use client";
+import { useState, useEffect, ReactNode, useCallback, JSX } from "react";
+import { Linkedin } from "react-feather";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import {
+  Github,
+  StickyNote,
+  X,
+  Coffee,
+  Code2,
+  Zap,
+  Instagram,
+} from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -32,19 +40,25 @@ function DarkGrid({ children, baseSize = 18, maxScale = 1.3 }: DarkGridProps) {
   const [grid, setGrid] = useState<GridState>({ cols: 0, rows: 0, colors: [] });
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  const calculateDistance = useCallback((indexA: number, indexB: number, cols: number) => {
-    const x1 = indexA % cols;
-    const y1 = Math.floor(indexA / cols);
-    const x2 = indexB % cols;
-    const y2 = Math.floor(indexB / cols);
-    return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-  }, []);
+  const calculateDistance = useCallback(
+    (indexA: number, indexB: number, cols: number) => {
+      const x1 = indexA % cols;
+      const y1 = Math.floor(indexA / cols);
+      const x2 = indexB % cols;
+      const y2 = Math.floor(indexB / cols);
+      return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+    },
+    [],
+  );
 
-  const getHoverScale = useCallback((index: number) => {
-    if (hoveredIndex === null || grid.cols === 0) return 1;
-    const distance = calculateDistance(index, hoveredIndex, grid.cols);
-    return Math.max(maxScale - distance * 0.15, 1);
-  }, [hoveredIndex, grid.cols, calculateDistance, maxScale]);
+  const getHoverScale = useCallback(
+    (index: number) => {
+      if (hoveredIndex === null || grid.cols === 0) return 1;
+      const distance = calculateDistance(index, hoveredIndex, grid.cols);
+      return Math.max(maxScale - distance * 0.15, 1);
+    },
+    [hoveredIndex, grid.cols, calculateDistance, maxScale],
+  );
 
   useEffect(() => {
     const calculateGrid = () => {
@@ -55,13 +69,13 @@ function DarkGrid({ children, baseSize = 18, maxScale = 1.3 }: DarkGridProps) {
       setGrid({
         cols,
         rows,
-        colors: Array.from({ length: cols * rows }, generateDarkColor)
+        colors: Array.from({ length: cols * rows }, generateDarkColor),
       });
     };
 
     calculateGrid();
-    window.addEventListener('resize', calculateGrid);
-    return () => window.removeEventListener('resize', calculateGrid);
+    window.addEventListener("resize", calculateGrid);
+    return () => window.removeEventListener("resize", calculateGrid);
   }, [baseSize]);
 
   return (
@@ -71,7 +85,7 @@ function DarkGrid({ children, baseSize = 18, maxScale = 1.3 }: DarkGridProps) {
         style={{
           gridTemplateColumns: `repeat(${grid.cols}, ${baseSize}px)`,
           gridAutoRows: `${baseSize}px`,
-          gap: '1px'
+          gap: "1px",
         }}
       >
         {grid.colors.map((color, index) => (
@@ -83,7 +97,7 @@ function DarkGrid({ children, baseSize = 18, maxScale = 1.3 }: DarkGridProps) {
             style={{
               backgroundColor: color,
               transform: `scale(${getHoverScale(index)})`,
-              borderRadius: '2px'
+              borderRadius: "2px",
             }}
           />
         ))}
@@ -119,7 +133,14 @@ const FloatingElements = () => {
 
 const Hero = () => {
   const [currentRole, setCurrentRole] = useState(0);
-  const roles = ["Software Developer", "UI Designer", "Front-End Developer", "Problem Solver"];
+  const roles = [
+    "Software Developer",
+    "Data Analyst",
+    "AI/ML Enthusiast",
+    "Python Developer",
+    "SQL Engineer",
+    "Tech Explorer",
+  ];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -130,45 +151,45 @@ const Hero = () => {
 
   useEffect(() => {
     // Main animations
-    gsap.from(".hero-name", { 
-      opacity: 0, 
-      scale: 0.8, 
-      duration: 1.2, 
+    gsap.from(".hero-name", {
+      opacity: 0,
+      scale: 0.8,
+      duration: 1.2,
       ease: "back.out(1.7)",
-      delay: 0.2
-    });
-    
-    gsap.from(".hero-role", { 
-      opacity: 0, 
-      x: -50, 
-      duration: 1, 
-      ease: "power3.out",
-      delay: 0.8
-    });
-    
-    gsap.from(".hero-description", { 
-      opacity: 0, 
-      y: 30, 
-      duration: 1, 
-      ease: "power2.out",
-      delay: 1.2
-    });
-    
-    gsap.from(".social-links", { 
-      opacity: 0, 
-      y: 40, 
-      duration: 1, 
-      ease: "power2.out",
-      delay: 1.6,
-      stagger: 0.1
+      delay: 0.2,
     });
 
-    gsap.from(".scroll-indicator", { 
-      opacity: 0, 
-      y: 20, 
-      duration: 1, 
+    gsap.from(".hero-role", {
+      opacity: 0,
+      x: -50,
+      duration: 1,
+      ease: "power3.out",
+      delay: 0.8,
+    });
+
+    gsap.from(".hero-description", {
+      opacity: 0,
+      y: 30,
+      duration: 1,
       ease: "power2.out",
-      delay: 2
+      delay: 1.2,
+    });
+
+    gsap.from(".social-links", {
+      opacity: 0,
+      y: 40,
+      duration: 1,
+      ease: "power2.out",
+      delay: 1.6,
+      stagger: 0.1,
+    });
+
+    gsap.from(".scroll-indicator", {
+      opacity: 0,
+      y: 20,
+      duration: 1,
+      ease: "power2.out",
+      delay: 2,
     });
   }, []);
 
@@ -182,51 +203,63 @@ const Hero = () => {
   const socialItems: SocialItem[] = [
     {
       icon: <Github size={18} />,
-      text: 'GitHub',
-      link: 'https://github.com/c-mulge',
-      color: 'hover:bg-gray-800 hover:text-white'
+      text: "GitHub",
+      link: "https://github.com/c-mulge",
+      color: "hover:bg-gray-800 hover:text-white",
     },
     {
       icon: <Linkedin size={18} />,
-      text: 'LinkedIn',
-      link: 'https://www.linkedin.com/in/channveer-mulge/',
-      color: 'hover:bg-blue-600 hover:text-white'
+      text: "LinkedIn",
+      link: "https://www.linkedin.com/in/channveer-mulge/",
+      color: "hover:bg-blue-600 hover:text-white",
     },
     {
       icon: <X size={18} />,
-      text: 'Twitter',
-      link: 'https://x.com/Cmulge',
-      color: 'hover:bg-gray-900 hover:text-white'
+      text: "Twitter",
+      link: "https://x.com/Cmulge",
+      color: "hover:bg-gray-900 hover:text-white",
+    },
+    {
+      icon: <Instagram size={18} />,
+      text: "Instagram",
+      link: "https://instagram.com/itsnot.veer",
+      color: "hover:bg-pink-600 hover:text-white",
     },
     {
       icon: <StickyNote size={18} />,
-      text: 'Resume',
-      link: '/My_Resume.pdf',
-      color: 'hover:bg-orange-600 hover:text-white'
-    }
+      text: "Resume",
+      link: "/resume_mit.pdf",
+      color: "hover:bg-orange-600 hover:text-white",
+    },
   ];
 
   return (
     <div className="h-screen w-screen relative overflow-hidden">
       <DarkGrid>
         <FloatingElements />
-        
+
         {/* Main Content */}
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto px-6">
-          
           {/* Greeting */}
           <div className="flex flex-col items-center text-center max-w-4xl mx-auto px-6 pt-32">
             <div className="inline-flex items-center gap-3 mb-6 px-4 py-2 bg-black/40 rounded-full border border-orange-500/30 backdrop-blur-sm">
               <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
-              <span className="text-orange-400 text-sm font-medium">Available for new opportunities</span>
+              <span className="text-orange-400 text-sm font-medium">
+                Available for new opportunities
+              </span>
             </div>
-            
-            <h1 className="text-6xl md:text-8xl font-bold text-white mu-8">
-              Hello, I&#39;m{' '}
+
+            <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight">
+              Hello, I&apos;m{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 animate-pulse">
                 Channveer
               </span>
             </h1>
+
+            <p className="mt-4 text-lg md:text-2xl text-gray-300">
+              Most people know me as{" "}
+              <span className="text-orange-400 font-semibold">Veer</span>
+            </p>
           </div>
 
           {/* Dynamic Role */}
@@ -241,10 +274,15 @@ const Hero = () => {
 
           {/* Description */}
           <p className="hero-description text-lg md:text-xl text-gray-300 leading-relaxed mb-12 max-w-2xl">
-            Crafting robust backend systems and elegant user experiences. 
-            Passionate about <span className="text-orange-400 font-medium">React</span>, 
-            <span className="text-orange-400 font-medium"> SQL</span>, and 
-            <span className="text-orange-400 font-medium"> Ui Design</span>.
+            Passionate about building data-driven solutions and scalable
+            systems. Exploring the worlds of{" "}
+            <span className="text-orange-400 font-medium">Data Science</span>,
+            <span className="text-orange-400 font-medium"> AI/ML</span>, and
+            <span className="text-orange-400 font-medium">
+              {" "}
+              Software Development
+            </span>
+            .
           </p>
 
           {/* Social Links */}
