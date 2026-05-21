@@ -88,7 +88,8 @@ const ProjectDisplay = () => {
               tech: "HTML, CSS, PHP, SQL",
               description:
                 "A full-stack car renting platform focused on smooth booking experience, authentication, and database integration.",
-              link: "/carental",
+              // link: "/carental",
+              link: "/",
               img: "/create0.png",
               direction: "left",
             },
@@ -99,7 +100,8 @@ const ProjectDisplay = () => {
               tech: "Python, SQL, Data Analytics",
               description:
                 "A personal finance and analytics platform designed to track expenses and generate meaningful spending insights.",
-              link: "/shopeasy",
+              // link: "/shopeasy",
+              link: "/",
               img: "/product1.png",
               direction: "right",
             },
@@ -110,7 +112,8 @@ const ProjectDisplay = () => {
               tech: "Full Stack Development • APIs • Databases",
               description:
                 "Contributed to scalable application features and backend development as part of a collaborative development environment.",
-              link: "/codehub",
+              // link: "/codehub",
+              link: "/",
               img: "/product1.png",
               direction: "left",
             },
